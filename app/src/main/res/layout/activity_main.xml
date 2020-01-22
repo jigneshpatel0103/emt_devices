@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollviewMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e9e4de"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    tools:context=".activity.MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBarWait"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:elevation="5dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayoutWifiNotConnected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageViewWifi"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/wifi_off"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
+
+            <TextView
+                android:id="@+id/textViewWifi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/connect_to_wifi"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewWifi" />
+
+            <ImageButton
+                android:id="@+id/imageViewRefreshWifi"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_refresh_black_24dp"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWifi" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayoutUi"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBarImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/cardViewImage"
+                app:layout_constraintEnd_toEndOf="@+id/cardViewImage"
+                app:layout_constraintStart_toStartOf="@+id/cardViewImage"
+                app:layout_constraintTop_toTopOf="@+id/cardViewImage" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageViewDesign"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/no_image" />
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/llButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewImage">
+
+
+                <Button
+                    android:id="@+id/btnLoadBMP"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custombutton"
+                    android:text="LoadBMP"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/btnProcess"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/custombutton"
+                    android:text="Process"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llButton"
+                app:rcBackgroundColor="#ffffff"
+                app:rcBackgroundPadding="5dp"
+                app:rcMax="100"
+                app:rcProgressColor="@color/colorPrimary"
+                app:rcRadius="5dp"
+                app:rcReverse="false"
+                app:rcSecondaryProgressColor="@color/colorPrimary" />
+
+            <LinearLayout
+                android:id="@+id/layoutLInenumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/progressBar">
+
+                <TextView
+                    android:id="@+id/txtLineNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp"
+                    android:text="Line: "
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/textViewLineNumber"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/btnMinus"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/custombutton"
+                    android:text="-"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btnPlus"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/custombutton"
+                    android:text="+"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <Button
+                    android:id="@+id/btnRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/custombutton"
+                    android:text="Repeat"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTextLineNumber"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:hint="Line number"
+                android:inputType="number"
+                android:singleLine="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutLInenumber" />
+
+            <Button
+                android:id="@+id/buttonSetLineNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custombutton"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:text="Set Line Number"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
+                app:layout_constraintStart_toEndOf="@+id/editTextLineNumber"
+                app:layout_constraintTop_toBottomOf="@+id/layoutLInenumber" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayoutDeviceNotConnected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imageNotConnctedToDevice"
+                android:layout_width="150dp"
+                android:layout_height="130dp"
+                android:src="@drawable/ic_no_wifi"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewDeviceNotConnected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/not_connected_to_device"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageNotConnctedToDevice" />
+
+            <ImageButton
+                android:id="@+id/imageViewRefresDevice"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:src="@drawable/ic_refresh_black_24dp"
+                android:tint="@color/colorPrimary"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDeviceNotConnected" />
+        </android.support.constraint.ConstraintLayout>
+
+        <ProgressBar
+            android:id="@+id/progressbarSocketLoader"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.20999998" />
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

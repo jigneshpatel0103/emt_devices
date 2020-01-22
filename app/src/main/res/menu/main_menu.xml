@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSeting"
+        android:title="@string/menu_setting" />
+    <item
+        android:id="@+id/menuPiLog"
+        android:title="@string/pi_log" />
+    <item
+        android:id="@+id/menuAndroidLog"
+        android:title="@string/android_log" />
+
+</menu>

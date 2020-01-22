@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">EMT Device</string>
+    <string name="pi_log">Device Log</string>
+    <string name="android_log">Android Log</string>
+    <string name="connect_to_wifi">Fail to connect with wifi</string>
+    <string name="googleip">172.217.27.196</string>
+    <string name="time_out">Time out</string>
+    <string name="time_out_message">Are you sure you want to change setting?</string>
+    <string name="not_connected_to_device">Not connected to device or mobile data is on.</string>
+    <string name="menu_setting">Setting</string>
+    <string name="text_login">Login</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_username">Username</string>
+    <string name="set_last_equipment_first">Set Last Equipment In Line First</string>
+    <string name="set_data_sequence">Set data sequence in equipment</string>
+    <string name="set_timeout">Set Timeout</string>
+    <string name="save">Save</string>
+
+</resources>
