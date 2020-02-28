@@ -38,9 +38,9 @@ public class SettingActivity extends AppCompatActivity {
     private ConstraintLayout mConstraintLayoutSettingUin;
     private ScrollView mScrollviewSetting;
     private LinearLayout mLinearLayoutLogin;
-    private EditText mEdittextUsername, mEdittextPassword;
+    private EditText mEdittextUsername, mEdittextPassword, mEdittextPeakGear;
     private Button mButtonLogin, mButtonSave;
-    private Switch switchTImeout, switchEquipmentFirstTIme;
+    private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter;
     private Spinner spinnerEquipmentFirstTime;
     private Spinner spinnerEquipmentPerLine;
     private String[] arrayNoOfEquipment = {"5 X 4", "5 X 8", "5 X 16", "5 X 32", "10 X 4", "10 X 8", "10 x 16"};
@@ -48,6 +48,7 @@ public class SettingActivity extends AppCompatActivity {
     private String[] dataSequence = {"Left Front Sequence", "Right Front Sequence", "Left Shuffle Sequence", "Right Shuffle Sequence"};
     public static CommunicationCommand communicationCommand;
     ProgressDialog dialog;
+    ArrayAdapter equipmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class SettingActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         initializeComponents();
-        ArrayAdapter equipmentAdapter = new ArrayAdapter(this,
+        equipmentAdapter = new ArrayAdapter(this,
                 android.R.layout.simple_expandable_list_item_1, arrayNoOfEquipment);
         spinnerEquipmentPerLine.setAdapter(equipmentAdapter);
 
@@ -92,10 +93,12 @@ public class SettingActivity extends AppCompatActivity {
         spinnerEquipmentFirstTime = findViewById(R.id.spinnerEquipmentFirstTime);
         mButtonSave = findViewById(R.id.buttonSave);
         switchTImeout = findViewById(R.id.switchTImeout);
+        resetMeter = findViewById(R.id.resetMeter);
         mLinearLayoutLogin = findViewById(R.id.linearLayoutLogin);
         mConstraintLayoutSettingUin = findViewById(R.id.constraintLayoutSettingUi);
         mEdittextUsername = findViewById(R.id.edittextUsername);
         mEdittextPassword = findViewById(R.id.edittextPassword);
+        mEdittextPeakGear = findViewById(R.id.PeakGearValue);
         mButtonLogin = findViewById(R.id.buttonLogin);
         mScrollviewSetting = findViewById(R.id.scrollviewSetting);
 
@@ -104,8 +107,6 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if ((mEdittextUsername.getText().toString().trim().equals("User@emt") && mEdittextPassword.getText().toString().trim().equals("emt")) ||
 		     (mEdittextUsername.getText().toString().trim().equals("electromechtechno") && mEdittextPassword.getText().toString().trim().equals("ra9kumari8abhai7240"))) {
-                    mLinearLayoutLogin.setVisibility(View.GONE);
-                    mConstraintLayoutSettingUin.setVisibility(View.VISIBLE);
                     if (isSocketAlive()) {
                         communicationCommand = new CommunicationCommand();
                         Handler handler = new Handler();
@@ -113,6 +114,13 @@ public class SettingActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 setData();
+				if(mEdittextUsername.getText().toString().trim().equals("User@emt")) {
+					spinnerEquipmentPerLine.setEnabled(false);
+					resetMeter.setEnabled(false);
+					mEdittextPeakGear.setEnabled(false);
+				}
+                    		mLinearLayoutLogin.setVisibility(View.GONE);
+                    		mConstraintLayoutSettingUin.setVisibility(View.VISIBLE);
                             }
                         }, 500);
                     } else {
@@ -137,22 +145,29 @@ public class SettingActivity extends AppCompatActivity {
                             dialog = new ProgressDialog(SettingActivity.this);
                             dialog.setMessage("Saving Data, please wait...");
                             dialog.show();
-                            int setTime, setEquStatus, setEquPerLine = 0;
+                            int setTime, setEquStatus, setEquPerLine = 0, gear_value, meterReset;
                             if (switchTImeout.isChecked()) {
                                 setTime = Constants.ENABLED_EQUIPMENT_TIME_OUT;
                             } else {
                                 setTime = Constants.DISABLE_EQUIPMENT_TIME_OUT;
                             }
+			    if(resetMeter.isChecked())
+			    	meterReset = 1;
+			    else
+			    	meterReset = 0;
 
 			    setEquStatus = spinnerEquipmentFirstTime.getSelectedItemPosition() + 1;
 			    if (switchEquipmentFirstTIme.isChecked())
 				setEquStatus += 4;
 			    setEquPerLine = spinnerEquipmentPerLine.getSelectedItemPosition() + 1;
 
+			    gear_value = Integer.parseInt( mEdittextPeakGear.getText().toString() );
+
 			    if(mEdittextUsername.getText().toString().trim().equals("electromechtechno"))
-				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine);
+				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset);
 			    else
 				communicationCommand.settingCustomerCommand(setTime, setEquStatus);
+
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
                                 @Override
@@ -189,6 +204,7 @@ public class SettingActivity extends AppCompatActivity {
             switchTImeout.setChecked(false);
         }
 
+	resetMeter.setChecked(false);
         int isEquipment = communicationCommand.getEqupmentFirstStatus();
 	if(isEquipment > 4) {
 		switchEquipmentFirstTIme.setChecked(true);
@@ -198,8 +214,9 @@ public class SettingActivity extends AppCompatActivity {
         spinnerEquipmentFirstTime.setSelection(isEquipment - 1);
         int noOfEquipment = communicationCommand.getNo_Of_Equepment_Per_Line();
 	spinnerEquipmentPerLine.setSelection(noOfEquipment - 1);
+	int gear_value = communicationCommand.getPeakGearValue();
+	mEdittextPeakGear.setText(String.valueOf(gear_value));
         communicationCommand.closeSocket();
-
     }
 
     /**

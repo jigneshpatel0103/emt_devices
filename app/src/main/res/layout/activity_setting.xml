@@ -91,57 +91,94 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Switch
-                android:id="@+id/switchEquipmentFirstTIme"
+                android:id="@+id/resetMeter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Reset Meter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchTImeout"/>
+
+
+            <Switch
+                android:id="@+id/switchEquipmentFirstTIme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/set_last_equipment_first"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switchTImeout" />
+                app:layout_constraintTop_toBottomOf="@+id/resetMeter" />
 
             <Spinner
                 android:id="@+id/spinnerEquipmentFirstTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:text="@string/set_data_sequence"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switchEquipmentFirstTIme" />
 
-
             <Spinner
                 android:id="@+id/spinnerEquipmentPerLine"
                 android:layout_width="0dp"
                 android:layout_height="27dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerEquipmentFirstTime" />
 
-            <Button
+            <TextView android:text="@string/peak_gear"
+                android:paddingLeft="10dp"
+                android:layout_marginBottom="0dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_peakgear"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerEquipmentPerLine"/>
+
+	        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/PeakGearValue"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:hint="@string/hint_peakgearRange"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerEquipmentPerLine"/>
+
+	    <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/custombutton"
                 android:text="@string/save"
                 android:textColor="@android:color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerEquipmentPerLine" />
+                app:layout_constraintTop_toBottomOf="@+id/PeakGearValue" />
 
         </android.support.constraint.ConstraintLayout>
-
-
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

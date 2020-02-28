@@ -11,9 +11,12 @@
     <string name="text_login">Login</string>
     <string name="hint_password">Password</string>
     <string name="hint_username">Username</string>
+    <string name="hint_peakgear">Peak Gear Value</string>
+    <string name="hint_peakgearRange">10 to 100</string>
     <string name="set_last_equipment_first">Set Last Equipment In Line First</string>
     <string name="set_data_sequence">Set data sequence in equipment</string>
     <string name="set_timeout">Set Timeout</string>
     <string name="save">Save</string>
+    <string name="peak_gear">Peak Gear Value</string>
 
 </resources>

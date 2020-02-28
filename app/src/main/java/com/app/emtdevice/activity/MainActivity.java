@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupUi() {
         Staticdata.isProgressShow(MainActivity.this);
-        progressDismiss("Unable to setup ui");
+        //progressDismiss("Unable to setup ui");
         Handler sockethandler = new Handler();
         sockethandler.postDelayed(new Runnable() {
             @Override
@@ -419,9 +419,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("pistate", piAppState + "");
                 if (piAppState == Constants.APP_PROCESS_IMAGE_STATE) {
                     getImageFromPi();
-                } else {
-                    Staticdata.isProgressCancle();
                 }
+                Staticdata.isProgressCancle();
             }
         }, 100);
 
@@ -481,7 +480,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     })
                                     .into(mImageViewDesign);
                             operationalButton(true);
-                            Staticdata.isProgressCancle();
                         }
 
                     }

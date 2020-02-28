@@ -51,6 +51,18 @@ public class CommunicationCommand {
         return currentLine;
     }
 
+    public int getPeakGearValue() {
+        communicationTask.sendCommandToPi(Constants.GET_PEAK_GEAR_VALUE);
+        byte cmd = communicationTask.readCommandFromPi();
+        if (cmd == Constants.SUCCESS) {
+            communicationTask.sendCommandToPi(Constants.NEXT_ACTION);
+        }
+        int peakGearValue = communicationTask.readIntDataFromPi();
+        communicationTask.sendCommandToPi(Constants.SUCCESS);
+
+        return peakGearValue;
+    }
+
     public Bitmap getBmpImage() {
         Bitmap bmpData = null;
 
@@ -136,6 +148,32 @@ public class CommunicationCommand {
         }
         return isSuccess;
     }
+
+    public boolean setPeakGearValue(int gearValue) {
+        boolean isSuccess = false;
+        communicationTask.sendCommandToPi(Constants.SET_PEAK_GEAR_VALUE);
+        byte cmd = communicationTask.readCommandFromPi();
+        if (cmd == Constants.SUCCESS) {
+            communicationTask.sendIntDataToPi(gearValue);
+            byte cmdRead = communicationTask.readCommandFromPi();
+            if (cmdRead == Constants.SUCCESS) {
+                isSuccess = true;
+            }
+        }
+        return isSuccess;
+    }
+
+    public boolean resetMeter() {
+        boolean isSuccess = false;
+        communicationTask.sendCommandToPi(Constants.METER_RESET);
+        byte cmd = communicationTask.readCommandFromPi();
+        if (cmd == Constants.SUCCESS) {
+                isSuccess = true;
+        }
+        return isSuccess;
+    }
+
+
 
     public int getMaxLineNumber() {
         int maxLine;
@@ -256,10 +294,13 @@ public class CommunicationCommand {
 
     }
 
-    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine) {
+    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine, int gearValue, int resetmeter) {
         setTimeOut(timeOut);
         setEqupmentFirstStatus(setEquFirstStatus);
         setNo_Of_Equepment_Per_Line(setNoOfEquPerLine);
+	setPeakGearValue(gearValue);
+	if(resetmeter == 1)
+		resetMeter();
         resetDeviceApplication();
     }
 

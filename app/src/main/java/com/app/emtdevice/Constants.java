@@ -33,6 +33,9 @@ public class Constants {
     public static final byte SET_NO_OF_EQUPMENT_PER_LINE = 23;
     public static final byte RESET_DEVICE_APPLICATION = 24;
     public static final byte GET_MD5_SUM = 25;
+    public static final byte GET_PEAK_GEAR_VALUE = 26;
+    public static final byte SET_PEAK_GEAR_VALUE = 27;
+    public static final byte METER_RESET = 28;
 
     public static final byte NEXT_ACTION = 30;
     public static final byte SUCCESS = 55;
