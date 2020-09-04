@@ -40,7 +40,7 @@ public class SettingActivity extends AppCompatActivity {
     private LinearLayout mLinearLayoutLogin;
     private EditText mEdittextUsername, mEdittextPassword, mEdittextPeakGear;
     private Button mButtonLogin, mButtonSave;
-    private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter;
+    private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter, narrowSwap, invertBMP;
     private Spinner spinnerEquipmentFirstTime;
     private Spinner spinnerEquipmentPerLine;
     private String[] arrayNoOfEquipment = {"5 X 4", "5 X 8", "5 X 16", "5 X 32", "10 X 4", "10 X 8", "10 x 16"};
@@ -94,6 +94,8 @@ public class SettingActivity extends AppCompatActivity {
         mButtonSave = findViewById(R.id.buttonSave);
         switchTImeout = findViewById(R.id.switchTImeout);
         resetMeter = findViewById(R.id.resetMeter);
+        narrowSwap = findViewById(R.id.narrowOddEven);
+        invertBMP = findViewById(R.id.invertBMP);
         mLinearLayoutLogin = findViewById(R.id.linearLayoutLogin);
         mConstraintLayoutSettingUin = findViewById(R.id.constraintLayoutSettingUi);
         mEdittextUsername = findViewById(R.id.edittextUsername);
@@ -145,7 +147,7 @@ public class SettingActivity extends AppCompatActivity {
                             dialog = new ProgressDialog(SettingActivity.this);
                             dialog.setMessage("Saving Data, please wait...");
                             dialog.show();
-                            int setTime, setEquStatus, setEquPerLine = 0, gear_value, meterReset;
+                            int setTime, setEquStatus, setEquPerLine = 0, gear_value, meterReset, imageSetting = 0;
                             if (switchTImeout.isChecked()) {
                                 setTime = Constants.ENABLED_EQUIPMENT_TIME_OUT;
                             } else {
@@ -156,6 +158,15 @@ public class SettingActivity extends AppCompatActivity {
 			    else
 			    	meterReset = 0;
 
+			    if(narrowSwap.isChecked()) {
+                    imageSetting = 0;
+                } else {
+                    imageSetting = 1;
+                }
+			    if(invertBMP.isChecked()) {
+			        imageSetting += 2;
+                }
+
 			    setEquStatus = spinnerEquipmentFirstTime.getSelectedItemPosition() + 1;
 			    if (switchEquipmentFirstTIme.isChecked())
 				setEquStatus += 4;
@@ -164,9 +175,9 @@ public class SettingActivity extends AppCompatActivity {
 			    gear_value = Integer.parseInt( mEdittextPeakGear.getText().toString() );
 
 			    if(mEdittextUsername.getText().toString().trim().equals("electromechtechno"))
-				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset);
+				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset, imageSetting);
 			    else
-				communicationCommand.settingCustomerCommand(setTime, setEquStatus);
+				communicationCommand.settingCustomerCommand(setTime, setEquStatus, imageSetting);
 
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -216,6 +227,18 @@ public class SettingActivity extends AppCompatActivity {
 	spinnerEquipmentPerLine.setSelection(noOfEquipment - 1);
 	int gear_value = communicationCommand.getPeakGearValue();
 	mEdittextPeakGear.setText(String.valueOf(gear_value));
+	int imageSetting = communicationCommand.getImageSetting();
+	if (imageSetting > 1) {
+	    invertBMP.setChecked(true);
+	    imageSetting -= 2;
+    } else {
+	    invertBMP.setChecked(false);
+    }
+	if(imageSetting > 0) {
+	    narrowSwap.setChecked(false);
+    } else {
+	    narrowSwap.setChecked(true);
+    }
         communicationCommand.closeSocket();
     }
 

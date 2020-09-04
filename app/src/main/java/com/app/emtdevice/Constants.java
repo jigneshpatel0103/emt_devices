@@ -36,6 +36,8 @@ public class Constants {
     public static final byte GET_PEAK_GEAR_VALUE = 26;
     public static final byte SET_PEAK_GEAR_VALUE = 27;
     public static final byte METER_RESET = 28;
+    public static final byte GET_INVERT_INPUT_IMAGE = 29;
+    public static final byte SET_INVERT_INPUT_IMAGE = 31;
 
     public static final byte NEXT_ACTION = 30;
     public static final byte SUCCESS = 55;
