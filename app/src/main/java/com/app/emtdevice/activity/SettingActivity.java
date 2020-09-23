@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatActivity {
     private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter, narrowSwap, invertBMP;
     private Spinner spinnerEquipmentFirstTime;
     private Spinner spinnerEquipmentPerLine;
-    private String[] arrayNoOfEquipment = {"5 X 4", "5 X 8", "5 X 16", "5 X 32", "10 X 4", "10 X 8", "10 x 16"};
+    private String[] arrayNoOfEquipment = {"5 X 4", "5 x 5", "5 X 6", "5 X 7", "5 X 8", "5 X 16", "5 X 32", "10 X 4", "10 x 5", "10 x 6", "10 X 7", "10 X 8", "10 x 16"};
     //private String[] dataSequence = {"D0:D1:..:D6:D7", "D7:D6:..:D1:D0", "D1:D0:..:D7:D6", "D6:D7:..:D0:D1"};
     private String[] dataSequence = {"Left Front Sequence", "Right Front Sequence", "Left Shuffle Sequence", "Right Shuffle Sequence"};
     public static CommunicationCommand communicationCommand;
@@ -158,16 +158,16 @@ public class SettingActivity extends AppCompatActivity {
 			    else
 			    	meterReset = 0;
 
-			    if(narrowSwap.isChecked()) {
-                    imageSetting = 0;
-                } else {
-                    imageSetting = 1;
-                }
-			    if(invertBMP.isChecked()) {
-			        imageSetting += 2;
-                }
+				if(narrowSwap.isChecked()) {
+					imageSetting = 0;
+				} else {
+					imageSetting = 1;
+				}
+				if(invertBMP.isChecked()) {
+					imageSetting += 2;
+				}
 
-			    setEquStatus = spinnerEquipmentFirstTime.getSelectedItemPosition() + 1;
+				setEquStatus = spinnerEquipmentFirstTime.getSelectedItemPosition() + 1;
 			    if (switchEquipmentFirstTIme.isChecked())
 				setEquStatus += 4;
 			    setEquPerLine = spinnerEquipmentPerLine.getSelectedItemPosition() + 1;
@@ -177,7 +177,7 @@ public class SettingActivity extends AppCompatActivity {
 			    if(mEdittextUsername.getText().toString().trim().equals("electromechtechno"))
 				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset, imageSetting);
 			    else
-				communicationCommand.settingCustomerCommand(setTime, setEquStatus, imageSetting);
+				communicationCommand.settingCustomerCommand(setTime, setEquStatus, imageSetting, meterReset);
 
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -239,6 +239,7 @@ public class SettingActivity extends AppCompatActivity {
     } else {
 	    narrowSwap.setChecked(true);
     }
+
         communicationCommand.closeSocket();
     }
 

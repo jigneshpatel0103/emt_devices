@@ -322,21 +322,23 @@ public class CommunicationCommand {
 
     }
 
-    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine, int gearValue, int resetmeter, int imageSetting) {
+    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine, int gearValue, int resetmeter, int imageSetting ) {
         setTimeOut(timeOut);
         setEqupmentFirstStatus(setEquFirstStatus);
         setNo_Of_Equepment_Per_Line(setNoOfEquPerLine);
-	    setPeakGearValue(gearValue);
-	    setImageSetting(imageSetting);
+	setPeakGearValue(gearValue);
+	setImageSetting(imageSetting);
 	if(resetmeter == 1)
 		resetMeter();
         resetDeviceApplication();
     }
 
-    public void settingCustomerCommand(int timeOut, int setEquFirstStatus, int imageSetting) {
+    public void settingCustomerCommand(int timeOut, int setEquFirstStatus, int imageSetting, int resetmeter) {
         setTimeOut(timeOut);
         setEqupmentFirstStatus(setEquFirstStatus);
         setImageSetting(imageSetting);
+	if(resetmeter == 1)
+		resetMeter();
         resetDeviceApplication();
     }
 
