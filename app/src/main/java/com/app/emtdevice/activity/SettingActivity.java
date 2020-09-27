@@ -118,7 +118,6 @@ public class SettingActivity extends AppCompatActivity {
                                 setData();
 				if(mEdittextUsername.getText().toString().trim().equals("User@emt")) {
 					spinnerEquipmentPerLine.setEnabled(false);
-					resetMeter.setEnabled(false);
 					mEdittextPeakGear.setEnabled(false);
 				}
                     		mLinearLayoutLogin.setVisibility(View.GONE);
