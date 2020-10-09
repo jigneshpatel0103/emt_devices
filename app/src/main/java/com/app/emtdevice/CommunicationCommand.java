@@ -257,6 +257,22 @@ public class CommunicationCommand {
         return isSuccess;
     }
 
+    public boolean setForceMode (int forceMode) {
+        boolean isSuccess = false;
+        communicationTask.sendCommandToPi(Constants.SET_FORCE_BROAD_MODE);
+        byte cmd = communicationTask.readCommandFromPi();
+        if (cmd == Constants.SUCCESS) {
+            communicationTask.sendIntDataToPi(forceMode);
+            byte cmdRead = communicationTask.readCommandFromPi();
+            if (cmdRead == Constants.SUCCESS) {
+                Log.e("SET FORCE MODE", "READING INT DATA  ");
+
+                isSuccess = true;
+            }
+        }
+        return isSuccess;
+    }
+
     public int getEqupmentFirstStatus() {
         communicationTask.sendCommandToPi(Constants.GET_EQUPMENT_FIRST_STATUS);
         byte cmd = communicationTask.readCommandFromPi();
@@ -282,6 +298,20 @@ public class CommunicationCommand {
         communicationTask.sendCommandToPi(Constants.SUCCESS);
 
         Log.e("IMAGE SETTIMG SATUS", "READING INT DATA : " + getStatus);
+        return getStatus;
+    }
+
+    public int getForceMode() {
+        communicationTask.sendCommandToPi(Constants.GET_FORCE_BROAD_MODE);
+        byte cmd = communicationTask.readCommandFromPi();
+        if (cmd == Constants.SUCCESS) {
+            communicationTask.sendCommandToPi(Constants.NEXT_ACTION);
+        } else {
+        }
+        int getStatus = communicationTask.readIntDataFromPi();
+        communicationTask.sendCommandToPi(Constants.SUCCESS);
+
+        Log.e("FORCE MODE SATUS", "READING INT DATA : " + getStatus);
         return getStatus;
     }
 
@@ -322,21 +352,24 @@ public class CommunicationCommand {
 
     }
 
-    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine, int gearValue, int resetmeter, int imageSetting ) {
+    public void settingCommand(int timeOut, int setEquFirstStatus, int setNoOfEquPerLine, int gearValue, int resetmeter, int imageSetting, int forceMode ) {
         setTimeOut(timeOut);
         setEqupmentFirstStatus(setEquFirstStatus);
         setNo_Of_Equepment_Per_Line(setNoOfEquPerLine);
 	setPeakGearValue(gearValue);
 	setImageSetting(imageSetting);
+	setForceMode(forceMode);
 	if(resetmeter == 1)
 		resetMeter();
         resetDeviceApplication();
     }
 
-    public void settingCustomerCommand(int timeOut, int setEquFirstStatus, int imageSetting, int resetmeter) {
+    public void settingCustomerCommand(int timeOut, int setEquFirstStatus, int imageSetting, int resetmeter, int gearValue, int forceMode) {
         setTimeOut(timeOut);
         setEqupmentFirstStatus(setEquFirstStatus);
         setImageSetting(imageSetting);
+	setPeakGearValue(gearValue);
+	setForceMode(forceMode);
 	if(resetmeter == 1)
 		resetMeter();
         resetDeviceApplication();

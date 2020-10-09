@@ -40,10 +40,10 @@ public class SettingActivity extends AppCompatActivity {
     private LinearLayout mLinearLayoutLogin;
     private EditText mEdittextUsername, mEdittextPassword, mEdittextPeakGear;
     private Button mButtonLogin, mButtonSave;
-    private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter, narrowSwap, invertBMP;
+    private Switch switchTImeout, switchEquipmentFirstTIme, resetMeter, narrowSwap, invertBMP, forceBroad;
     private Spinner spinnerEquipmentFirstTime;
     private Spinner spinnerEquipmentPerLine;
-    private String[] arrayNoOfEquipment = {"5 X 4", "5 x 5", "5 X 6", "5 X 7", "5 X 8", "5 X 16", "5 X 32", "10 X 4", "10 x 5", "10 x 6", "10 X 7", "10 X 8", "10 x 16"};
+    private String[] arrayNoOfEquipment = {"5 X 4", "5 x 5", "5 X 6", "5 X 7", "5 X 8", "5 X 9" , "5 X 11" , "5 X 12", "5 X 16", "5 X 24", "5 X 32", "10 X 4", "10 x 5", "10 x 6", "10 X 7", "10 x 8", "10 X 9", "10 X 11", "10 X 12", "10 X 16"};
     //private String[] dataSequence = {"D0:D1:..:D6:D7", "D7:D6:..:D1:D0", "D1:D0:..:D7:D6", "D6:D7:..:D0:D1"};
     private String[] dataSequence = {"Left Front Sequence", "Right Front Sequence", "Left Shuffle Sequence", "Right Shuffle Sequence"};
     public static CommunicationCommand communicationCommand;
@@ -95,6 +95,7 @@ public class SettingActivity extends AppCompatActivity {
         switchTImeout = findViewById(R.id.switchTImeout);
         resetMeter = findViewById(R.id.resetMeter);
         narrowSwap = findViewById(R.id.narrowOddEven);
+        forceBroad = findViewById(R.id.forcebroad);
         invertBMP = findViewById(R.id.invertBMP);
         mLinearLayoutLogin = findViewById(R.id.linearLayoutLogin);
         mConstraintLayoutSettingUin = findViewById(R.id.constraintLayoutSettingUi);
@@ -118,7 +119,6 @@ public class SettingActivity extends AppCompatActivity {
                                 setData();
 				if(mEdittextUsername.getText().toString().trim().equals("User@emt")) {
 					spinnerEquipmentPerLine.setEnabled(false);
-					mEdittextPeakGear.setEnabled(false);
 				}
                     		mLinearLayoutLogin.setVisibility(View.GONE);
                     		mConstraintLayoutSettingUin.setVisibility(View.VISIBLE);
@@ -146,7 +146,7 @@ public class SettingActivity extends AppCompatActivity {
                             dialog = new ProgressDialog(SettingActivity.this);
                             dialog.setMessage("Saving Data, please wait...");
                             dialog.show();
-                            int setTime, setEquStatus, setEquPerLine = 0, gear_value, meterReset, imageSetting = 0;
+                            int setTime, setEquStatus, setEquPerLine = 0, gear_value, meterReset, imageSetting = 0, forceMode = 0;
                             if (switchTImeout.isChecked()) {
                                 setTime = Constants.ENABLED_EQUIPMENT_TIME_OUT;
                             } else {
@@ -166,6 +166,11 @@ public class SettingActivity extends AppCompatActivity {
 					imageSetting += 2;
 				}
 
+				if (forceBroad.isChecked())
+					forceMode = 1;
+				else
+					forceMode = 0;
+
 				setEquStatus = spinnerEquipmentFirstTime.getSelectedItemPosition() + 1;
 			    if (switchEquipmentFirstTIme.isChecked())
 				setEquStatus += 4;
@@ -174,9 +179,9 @@ public class SettingActivity extends AppCompatActivity {
 			    gear_value = Integer.parseInt( mEdittextPeakGear.getText().toString() );
 
 			    if(mEdittextUsername.getText().toString().trim().equals("electromechtechno"))
-				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset, imageSetting);
+				communicationCommand.settingCommand(setTime, setEquStatus, setEquPerLine, gear_value, meterReset, imageSetting, forceMode);
 			    else
-				communicationCommand.settingCustomerCommand(setTime, setEquStatus, imageSetting, meterReset);
+				communicationCommand.settingCustomerCommand(setTime, setEquStatus, imageSetting, meterReset, gear_value, forceMode );
 
                             Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {
@@ -238,6 +243,11 @@ public class SettingActivity extends AppCompatActivity {
     } else {
 	    narrowSwap.setChecked(true);
     }
+	int forcemode = communicationCommand.getForceMode();
+	if (forcemode > 0)
+		forceBroad.setChecked(true);
+	else
+		forceBroad.setChecked(false);
 
         communicationCommand.closeSocket();
     }
